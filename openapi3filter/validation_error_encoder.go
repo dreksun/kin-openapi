@@ -181,6 +181,6 @@ func convertSchemaError(e *RequestError, innerErr *openapi3.SchemaError) *Valida
 	return cErr
 }
 
-func toJSONPointer(reversePath []string) string {
-	return "/" + strings.Join(reversePath, "/")
+func toJSONPointer(ReversePath []string) string {
+	return "/" + strings.Join(ReversePath, "/")
 }

@@ -1242,7 +1242,7 @@ func testSchemaMultiError(t *testing.T, example schemaMultiErrorExample) func(*t
 					scherr, _ := e.(*SchemaError)
 					for _, expectedErr := range expected {
 						expectedScherr, _ := expectedErr.(*SchemaError)
-						if reflect.DeepEqual(expectedScherr.reversePath, scherr.reversePath) &&
+						if reflect.DeepEqual(expectedScherr.ReversePath, scherr.ReversePath) &&
 							expectedScherr.SchemaField == scherr.SchemaField {
 							found = true
 							break
@@ -1299,13 +1299,13 @@ var schemaMultiErrorExamples = []schemaMultiErrorExample{
 		ExpectedErrors: []MultiError{
 			{
 				&SchemaError{SchemaField: "minItems"},
-				&SchemaError{SchemaField: "pattern", reversePath: []string{"0"}},
+				&SchemaError{SchemaField: "pattern", ReversePath: []string{"0"}},
 			},
 			{
 				&SchemaError{SchemaField: "maxItems"},
-				&SchemaError{SchemaField: "pattern", reversePath: []string{"0"}},
-				&SchemaError{SchemaField: "pattern", reversePath: []string{"1"}},
-				&SchemaError{SchemaField: "pattern", reversePath: []string{"2"}},
+				&SchemaError{SchemaField: "pattern", ReversePath: []string{"0"}},
+				&SchemaError{SchemaField: "pattern", ReversePath: []string{"1"}},
+				&SchemaError{SchemaField: "pattern", ReversePath: []string{"2"}},
 			},
 		},
 	},
@@ -1328,8 +1328,8 @@ var schemaMultiErrorExamples = []schemaMultiErrorExample{
 		},
 		ExpectedErrors: []MultiError{
 			{
-				&SchemaError{SchemaField: "type", reversePath: []string{"key1", "0"}},
-				&SchemaError{SchemaField: "type", reversePath: []string{"key2", "0"}},
+				&SchemaError{SchemaField: "type", ReversePath: []string{"key1", "0"}},
+				&SchemaError{SchemaField: "type", ReversePath: []string{"key2", "0"}},
 			},
 		},
 	},
@@ -1352,9 +1352,9 @@ var schemaMultiErrorExamples = []schemaMultiErrorExample{
 		},
 		ExpectedErrors: []MultiError{
 			{
-				&SchemaError{SchemaField: "type", reversePath: []string{"key1"}},
-				&SchemaError{SchemaField: "type", reversePath: []string{"key2"}},
-				&SchemaError{SchemaField: "pattern", reversePath: []string{"1", "key3"}},
+				&SchemaError{SchemaField: "type", ReversePath: []string{"key1"}},
+				&SchemaError{SchemaField: "type", ReversePath: []string{"key2"}},
+				&SchemaError{SchemaField: "pattern", ReversePath: []string{"1", "key3"}},
 			},
 		},
 	},

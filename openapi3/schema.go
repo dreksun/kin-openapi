@@ -2003,8 +2003,8 @@ func (schema *Schema) expectedType(settings *schemaValidationSettings, value int
 type SchemaError struct {
 	// Value is the value that failed validation.
 	Value interface{}
-	// reversePath is the path to the value that failed validation.
-	reversePath []string
+	// ReversePath is the path to the value that failed validation.
+	ReversePath []string
 	// Schema is the schema that failed validation.
 	Schema *Schema
 	// SchemaField is the field of the schema that failed validation.
@@ -2028,7 +2028,7 @@ func markSchemaErrorKey(err error, key string) error {
 	}
 
 	if v, ok := err.(*SchemaError); ok {
-		v.reversePath = append(v.reversePath, key)
+		v.ReversePath = append(v.ReversePath, key)
 		return v
 	}
 	if v, ok := err.(MultiError); ok {
@@ -2045,8 +2045,8 @@ func markSchemaErrorIndex(err error, index int) error {
 }
 
 func (err *SchemaError) JSONPointer() []string {
-	reversePath := err.reversePath
-	path := append([]string(nil), reversePath...)
+	ReversePath := err.ReversePath
+	path := append([]string(nil), ReversePath...)
 	for left, right := 0, len(path)-1; left < right; left, right = left+1, right-1 {
 		path[left], path[right] = path[right], path[left]
 	}
@@ -2062,12 +2062,12 @@ func (err *SchemaError) Error() string {
 
 	buf := bytes.NewBuffer(make([]byte, 0, 256))
 
-	if len(err.reversePath) > 0 {
+	if len(err.ReversePath) > 0 {
 		buf.WriteString(`Error at "`)
-		reversePath := err.reversePath
-		for i := len(reversePath) - 1; i >= 0; i-- {
+		ReversePath := err.ReversePath
+		for i := len(ReversePath) - 1; i >= 0; i-- {
 			buf.WriteByte('/')
-			buf.WriteString(reversePath[i])
+			buf.WriteString(ReversePath[i])
 		}
 		buf.WriteString(`": `)
 	}
